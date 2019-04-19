@@ -12,7 +12,7 @@
     "no-tabs": 2,
     "eol-last": 2,
     "prefer-const": 2,
-    "sort-keys": ["error", "asc", {"caseSensitive": false, "natural": false}],
+    "sort-keys": ["error", "asc", { "caseSensitive": false, "natural": false }],
     "sort-vars": ["error", { "ignoreCase": true }]
   }
 }
