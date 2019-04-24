@@ -3,15 +3,7 @@
   "version": "1.0.0",
   "description": "<img width=\"250\" src=\"https://upload.wikimedia.org/wikipedia/commons/thumb/d/d9/Node.js_logo.svg/1200px-Node.js_logo.svg.png\" />",
   "main": "index.js",
-  "dependencies": {
-    "babel-cli": "^6.26.0",
-    "babel-preset-es2015": "^6.24.1",
-    "babel-preset-react": "^6.24.1",
-    "concurrently": "^4.1.0"
-  },
-  "devDependencies": {},
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "concurrently \"cd backend && node server.js\" \"cd client && npm start\""
   },
   "repository": {
@@ -21,8 +13,12 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "dependencies": {
+    "concurrently": "^4.1.0"
+  },
   "bugs": {
     "url": "https://github.com/ashleighmm/ashleigh_morehattia/issues"
   },
-  "homepage": "https://github.com/ashleighmm/ashleigh_morehattia#readme"
+  "homepage": "https://github.com/ashleighmm/ashleigh_morehattia#readme",
+  "devDependencies": {}
 }

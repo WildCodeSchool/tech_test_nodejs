@@ -10,6 +10,8 @@ const app = express();
 app.use(cors());
 const router = express.Router();
 
+
+
 // MongoDB Atlas database connection string
 const dbRoute = "mongodb+srv://amh:picasso@8@amh-gnugd.azure.mongodb.net/test?retryWrites=true";
 
@@ -66,7 +68,7 @@ router.post("/putData", (req, res) => {
   if ((!id && id !== 0) || !message) {
     return res.json({
       success: false,
-      error: "INVALID INPUTS"
+      error: "INVALID INPUT"
     });
   }
   data.message = message;

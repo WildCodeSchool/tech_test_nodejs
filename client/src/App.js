@@ -52,7 +52,6 @@ class App extends Component {
     });
   };
 
-
   // method using backend api to delete data from db
   deleteFromDB = idTodelete => {
     let objIdToDelete = null;
@@ -69,7 +68,6 @@ class App extends Component {
     });
   };
 
-
   // method using backend api to update existing data in db
   updateDB = (idToUpdate, updateToApply) => {
     let objIdToUpdate = null;
@@ -85,60 +83,72 @@ class App extends Component {
     });
   };
 
-
-  // render to the browser
+  // render to the browser - could separate into components
   render() {
     //array of data as an object set to the state
     const { data } = this.state;
     return (
-      <div>
-        <ul>
+      
+      <div class="form">
+        <h2>Your Christmas List</h2>
+        <ul class="list-group">
           {data.length <= 0
             ? "No gifts found"
             : data.map(dat => (
-                <li style={{ padding: "10px" }} key={data.message}>
+                <li style={{ padding: "10px" }} key={data.message} class="list-group-item">
                   <span style={{ color: "gray" }}> id: </span> {dat.id} <br />
                   <span style={{ color: "gray" }}> data: </span>
                   {dat.message}
                 </li>
               ))}
         </ul>
-        <div style={{ padding: "10px" }}>
+        <h3>Add a gift to the list</h3>
+        <div class="form-group">
+          <label for="addGift" >Enter gift name:</label>
           <input
             type="text"
             onChange={e => this.setState({ message: e.target.value })}
             placeholder="Add a gift"
             style={{ width: "200px" }}
-          />
-          <button onClick={() => this.putDataToDB(this.state.message)}>
+            class="form-control" 
+            id="addGift" />
+          <button class="btn btn-primary" onClick={() => this.putDataToDB(this.state.message)}>
             ADD GIFT
           </button>
         </div>
-        <div style={{ padding: "10px" }}>
+        <h3>Remove a gift from the list</h3>
+        <div class="form-group">
+          <label for="deleteGift" >Enter gift name:</label>
           <input
             type="text"
             style={{ width: "200px" }}
             onChange={e => this.setState({ idToDelete: e.target.value })}
             placeholder="Delete gift using id"
-          />
-          <button onClick={() => this.deleteFromDB(this.state.idToDelete)}>
-            DELETE GIFT
+            class="form-control" 
+            id="deleteGift" />
+          <button class="btn btn-primary" onClick={() => this.deleteFromDB(this.state.idToDelete)}>
+            REMOVE GIFT
           </button>
         </div>
-        <div style={{ padding: "10px" }}>
+        <h3>Change a gift on the list</h3>
+        <div class="form-group">
+          <label for="updateGiftId" >Enter gift name:</label>
           <input
             type="text"
             style={{ width: "200px" }}
             onChange={e => this.setState({ idToUpdate: e.target.value })}
             placeholder="Gift id"
-          />
+            class="form-control" 
+            id="updateGiftId" />
+            <label for="updateGiftName" >Enter gift name:</label>
           <input
             type="text"
             style={{ width: "200px" }}
             onChange={e => this.setState({ updateToApply: e.target.value })}
             placeholder="Gift name"
-          />
-          <button
+            class="form-control"
+            id="updateGiftName" />
+          <button class="btn btn-primary"
             onClick={() =>
               this.updateDB(this.state.idToUpdate, this.state.updateToApply)
             }

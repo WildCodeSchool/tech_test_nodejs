@@ -1,0 +1,19 @@
+.container {
+    padding-top: 3em;
+}
+
+.form-group{
+    display:flex;
+    align-items:center;
+    padding:10px 0;
+}
+
+h3 {
+    padding-top: 1em;
+}
+
+label, input {
+    margin-right: 10px;
+    
+}
+
