@@ -1,0 +1,24 @@
+{
+  "name": "ashleigh_morehattia",
+  "version": "1.0.0",
+  "description": "<img width=\"250\" src=\"https://upload.wikimedia.org/wikipedia/commons/thumb/d/d9/Node.js_logo.svg/1200px-Node.js_logo.svg.png\" />",
+  "main": "index.js",
+  "scripts": {
+    "start": "concurrently \"cd backend && node server.js\" \"cd client && npm start\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ashleighmm/ashleigh_morehattia.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "concurrently": "^4.1.0"
+  },
+  "bugs": {
+    "url": "https://github.com/ashleighmm/ashleigh_morehattia/issues"
+  },
+  "homepage": "https://github.com/ashleighmm/ashleigh_morehattia#readme",
+  "devDependencies": {}
+}
