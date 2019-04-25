@@ -7,20 +7,15 @@ const db = new Datastore({
   filename: 'gifts.db'
 })
 
-/* GET home page. */
-router.get('/', (req, res, next) => {
-  db.find({}, (err, docs) => {
-    res.send(docs)
-  })
+router.get('/', (req, res) => {
+  db.find({}, (err, docs) => res.send(docs))
 })
 
-router.get('/:id', (req, res, next) => {
-  db.findOne({ _id: req.params.id }, (err, docs) => {
-    res.send(docs)
-  })
+router.get('/:id', (req, res) => {
+  db.findOne({ _id: req.params.id }, (err, docs) => res.send(docs))
 })
 
-router.post('/', (req, res, next) => {
+router.post('/', (req, res) => {
   const { name, price } = req.body
 
   if (!name) return res.send(418, { error: 'No name' })
@@ -31,17 +26,11 @@ router.post('/', (req, res, next) => {
     price: parseInt(price)
   }
 
-  db.insert(doc, (err, newDoc) => {   // Callback is optional
-    res.send(newDoc)
-  })
+  db.insert(doc, (err, newDoc) => res.send(newDoc))
 })
 
-router.delete('/:id', (req, res, next) => {
-  db.remove({ _id: req.params.id }, (err, numRemoved) => {
-    res.send({
-      numRemoved: numRemoved
-    })
-  })
+router.delete('/:id', (req, res) => {
+  db.remove({ _id: req.params.id }, (err, numRemoved) => res.send({ numRemoved: numRemoved }))
 })
 
 module.exports = router
