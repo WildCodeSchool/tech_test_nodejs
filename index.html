@@ -1,0 +1,146 @@
+
+<!doctype html>
+<html lang="en">
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+    <title>Gift List Application</title>
+  </head>
+  <body>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-2"></div>
+            <div class="col-lg-8">
+                <form id="form">
+                    <div class="form-group">
+                        <label for="gift">Gift List</label>
+                        <input type="text" class="form-control" id="giftUserInput" placeholder="Gift">
+                        <button type="submit" class="btn btn-primary">Create</button>
+                    </div>
+                </form>
+            </div>
+            <div class="col-lg-2"></div>
+        </div>
+        <div class="row">
+            <div class="col-lg-2"></div>
+            <div class="col-lg-8">
+                <ul class="list-group" id="display">
+                
+                </ul>
+            </div>
+            <div class="col-lg-2"></div>
+        </div> 
+        <br>
+        <div class="row">
+            <div class="col-lg-2"></div>
+            <div class="col-lg-8">
+                <div class="alert" role="alert" id="message">
+                    
+                </div>
+            </div>
+            <div class="col-lg-2"></div>
+        </div>
+           
+    </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(()=>{
+            const display = $("#display");
+            const form = $("#form");
+            const giftUserInput = $("#giftUserInput");
+            const message = $("#message");
+            message.hide();
+            const displayMessage = (flag,msg)=>{
+                // successful
+                if(flag){
+                    message.removeClass('alert-danger');
+                    message.addClass('alert-success');
+                    message.html(msg);
+                    message.show();
+                }
+                else{
+                    message.removeClass('alert-success');
+                    message.addClass('alert-danger');
+                    message.html(msg);
+                    message.show();
+                }
+            }
+            const deleteGift = (gift,listItemID,deleteID)=>{
+                let deleteBtn = $(`#${deleteID}`);
+                deleteBtn.click(()=>{
+                    fetch(`/${gift._id}`,{
+                        method: "delete"
+                    }).then((response)=>{
+                        return response.json();
+                    }).then((data)=>{
+                        if(data.ok == 1){
+                            $(`#${listItemID}`).remove();
+                        }
+                    });
+                });
+            }
+            
+            const buildIDS = (gift)=>{
+                return {
+                    deleteID : "delete_" + gift._id,
+                    listItemID : "listItem_" + gift._id,
+                    giftID : "gift_" + gift._id
+                }
+            }
+            const buildTemplate = (gift,ids)=>{
+                return `<li class="list-group-item" id="${ids.listItemID}">
+                            <div class="row">
+                                <div class="col-md-4" id="${ids.giftID}">${gift.gift}</div>
+                                <div class="col-md-4"></div>
+                                <div class="col-md-4 text-right">
+                                    <button type="button" class="btn btn-danger" id="${ids.deleteID}">Delete</button>
+                                </div>
+                            </div>
+                       </li>`;
+            }
+            const displayGifts = (data)=>{
+                data.forEach((gift)=>{
+                    let ids = buildIDS(gift);
+                    display.append(buildTemplate(gift,ids));
+                    deleteGift(gift,ids.listItemID,ids.deleteID);
+                });
+            }
+            form.submit((e)=>{
+                e.preventDefault();
+                fetch('/',{
+                    method : 'post',
+                    body : JSON.stringify({gift : giftUserInput.val()}),
+                    headers : {
+                        "Content-Type" : "application/json; charset=utf-8"
+                    }
+                }).then((response)=>{
+                    return response.json();
+                }).then((data)=>{
+                    if(!data.error){
+                        if(data.result.ok == 1 && data.result.n == 1){
+                            let ids = buildIDS(data.document);
+                            display.append(buildTemplate(data.document,ids));
+                            deleteGift(data.document,ids.listItemID,ids.deleteID);
+                            displayMessage(true,data.msg);
+                        }
+                    }
+                    else
+                        displayMessage(false,data.error.message);
+                    resetGiftsInput();
+                    
+                });
+            });
+        });
+    </script>
+</body>
+</html>
